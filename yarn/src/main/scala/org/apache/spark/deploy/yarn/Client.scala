@@ -46,8 +46,9 @@ class Client(conf: Configuration, args: ClientArguments) extends YarnClientImpl 
   var rpc: YarnRPC = YarnRPC.create(conf)
   val yarnConf: YarnConfiguration = new YarnConfiguration(conf)
   val credentials = UserGroupInformation.getCurrentUser().getCredentials();
-  
-  def run() {
+
+  // for client user who want to monitor app status by itself.
+  def runApp() = {
     init(yarnConf)
     start()
     logClusterResourceDetails()
@@ -66,11 +67,14 @@ class Client(conf: Configuration, args: ClientArguments) extends YarnClientImpl 
     appContext.setUser(UserGroupInformation.getCurrentUser().getShortUserName())
 
     submitApp(appContext)
-    
+    appId
+  }
+
+  def run() {
+    val appId = runApp()
     monitorApplication(appId)
     System.exit(0)
   }
-  
 
   def logClusterResourceDetails() {
     val clusterMetrics: YarnClusterMetrics = super.getYarnClusterMetrics
@@ -255,7 +259,7 @@ class Client(conf: Configuration, args: ClientArguments) extends YarnClientImpl 
     val commands = List[String](javaCommand + 
       " -server " +
       JAVA_OPTS +
-      " org.apache.spark.deploy.yarn.ApplicationMaster" +
+      " " + args.amClass +
       " --class " + args.userClass + 
       " --jar " + args.userJar +
       userArgsToString(args) +
