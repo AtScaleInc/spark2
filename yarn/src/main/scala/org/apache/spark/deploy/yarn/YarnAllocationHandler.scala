@@ -21,7 +21,8 @@ import org.apache.spark.Logging
 import org.apache.spark.util.Utils
 import org.apache.spark.scheduler.SplitInfo
 import scala.collection
-import org.apache.hadoop.yarn.api.records.{AMResponse, ApplicationAttemptId, ContainerId, Priority, Resource, ResourceRequest, ContainerStatus, Container}
+import org.apache.hadoop.yarn.api.AMRMProtocol
+import org.apache.hadoop.yarn.api.records.{ApplicationAttemptId, ContainerId, Priority, Resource, ResourceRequest, ContainerStatus, Container}
 import org.apache.spark.scheduler.cluster.{ClusterScheduler, StandaloneSchedulerBackend}
 import org.apache.hadoop.yarn.api.protocolrecords.{AllocateRequest, AllocateResponse}
 import org.apache.hadoop.yarn.util.{RackResolver, Records}
@@ -84,7 +85,7 @@ private[yarn] class YarnAllocationHandler(val conf: Configuration, val resourceM
     // We need to send the request only once from what I understand ... but for now, not modifying this much.
 
     // Keep polling the Resource Manager for containers
-    val amResp = allocateWorkerResources(workersToRequest).getAMResponse
+    val amResp = allocateWorkerResources(workersToRequest)
 
     val _allocatedContainers = amResp.getAllocatedContainers()
     if (_allocatedContainers.size > 0) {
