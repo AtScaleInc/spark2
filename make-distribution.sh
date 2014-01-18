@@ -43,7 +43,7 @@ DISTDIR="$FWDIR/dist"
 
 # Get version from SBT
 export TERM=dumb   # Prevents color codes in SBT output
-VERSION=$($FWDIR/sbt/sbt "show version" | tail -1 | cut -f 2 | sed 's/^\([a-zA-Z0-9.-]*\).*/\1/')
+VERSION=$($FWDIR/sbt "show version" | tail -1 | cut -f 2 | sed 's/^\([a-zA-Z0-9.-]*\).*/\1/')
 
 # Initialize defaults
 SPARK_HADOOP_VERSION=1.0.4
@@ -83,7 +83,7 @@ fi
 # Build fat JAR
 export SPARK_HADOOP_VERSION
 export SPARK_YARN
-"$FWDIR/sbt/sbt" "assembly/assembly"
+"$FWDIR/sbt" "assembly/assembly"
 
 # Make directories
 rm -rf "$DISTDIR"
