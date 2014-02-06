@@ -71,7 +71,7 @@ class WorkerLauncher(args: ApplicationMasterArguments, conf: Configuration, spar
 
     override def receive = {
       case x: DisassociatedEvent =>
-        logInfo(s"Driver terminated or disconnected! Shutting down. $x")
+        logInfo("Driver terminated or disconnected! Shutting down. " + x)
         driverClosed = true
     }
   }
