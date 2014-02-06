@@ -23,6 +23,8 @@ import AssemblyKeys._
 // For Sonatype publishing
 //import com.jsuereth.pgp.sbtplugin.PgpKeys._
 
+import scala.util.Properties.{ envOrNone => env }
+
 object SparkBuild extends Build {
   // Hadoop version to build against. For example, "1.0.4" for Apache releases, or
   // "2.0.0-mr1-cdh4.2.0" for Cloudera Hadoop. Note that these variables can be set
@@ -34,6 +36,9 @@ object SparkBuild extends Build {
   val DEFAULT_IS_NEW_HADOOP = false
 
   val DEFAULT_YARN = false
+
+  val SPARK_PACKAGE = env("SPARK_CLASSIFIER").getOrElse("hadoop0_23_9")
+  val sparkPackage = "com.atscale.spark." + SPARK_PACKAGE
 
   // HBase version; set as appropriate.
   val HBASE_VERSION = "0.94.6"
@@ -95,7 +100,7 @@ object SparkBuild extends Build {
     core, repl, examples, bagel, streaming, mllib, tools, assemblyProj) ++ maybeYarnRef
 
   def sharedSettings = Defaults.defaultSettings ++ Seq(
-    organization := "org.apache.spark",
+    organization := sparkPackage,
     version := "0.8.1-incubating",
     scalaVersion := "2.9.3",
     scalacOptions := Seq("-Xmax-classfile-name", "120", "-unchecked", "-deprecation",
