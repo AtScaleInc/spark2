@@ -218,9 +218,8 @@ object SparkBuild extends Build {
     libraryDependencies ++= Seq(
       "com.google.guava" % "guava" % "14.0.1",
       "com.google.code.findbugs" % "jsr305" % "1.3.9",
-      "log4j" % "log4j" % "1.2.17",
       "org.slf4j" % "slf4j-api" % slf4jVersion,
-      "org.slf4j" % "slf4j-log4j12" % slf4jVersion,
+      "org.slf4j" % "slf4j-simple" % slf4jVersion,
       "commons-daemon" % "commons-daemon" % "1.0.10",  // workaround for bug HADOOP-9407
       "com.ning" % "compress-lzf" % "0.8.4",
       "org.xerial.snappy" % "snappy-java" % "1.0.5",
