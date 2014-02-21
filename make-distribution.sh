@@ -43,7 +43,7 @@ DISTDIR="$FWDIR/dist"
 
 # Get version from SBT
 export TERM=dumb   # Prevents color codes in SBT output
-VERSION=$($FWDIR/sbt/sbt "show version" | tail -1 | cut -f 2 | sed 's/^\([a-zA-Z0-9.-]*\).*/\1/')
+VERSION=$("$FWDIR/sbt/sbt" "show version" | tail -1 | cut -f 2 | sed 's/^\([a-zA-Z0-9.-]*\).*/\1/')
 
 # Initialize defaults
 SPARK_HADOOP_VERSION=1.0.4
@@ -91,7 +91,7 @@ mkdir -p "$DISTDIR/jars"
 echo "Spark $VERSION built for Hadoop $SPARK_HADOOP_VERSION" > "$DISTDIR/RELEASE"
 
 # Copy jars
-cp $FWDIR/assembly/target/scala*/*assembly*hadoop*.jar "$DISTDIR/jars/"
+cp "$FWDIR"/assembly/target/scala*/*assembly*hadoop*.jar "$DISTDIR/jars/"
 
 # Copy other things
 mkdir "$DISTDIR"/conf
