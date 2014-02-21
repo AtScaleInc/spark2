@@ -83,7 +83,7 @@ fi
 # Build fat JAR
 export SPARK_HADOOP_VERSION
 export SPARK_YARN
-"$FWDIR/sbt/sbt" "assembly/assembly"
+"$FWDIR"/sbt/sbt "assembly/assembly"
 
 # Make directories
 rm -rf "$DISTDIR"
