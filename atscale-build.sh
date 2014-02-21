@@ -1,7 +1,10 @@
 #! /usr/bin/env bash
 
-if [ "x$HADOOP_VERSION" == 'x' ]; then
-    echo 'Must set $HADOOP_VERSION'
+# Fail on any errors or missing vars
+set -e -u
+
+if [ "x$HADOOP_VERSION" = 'x' ]; then
+    echo '$HADOOP_VERSION must not be empty'
     exit 64
 fi
 
